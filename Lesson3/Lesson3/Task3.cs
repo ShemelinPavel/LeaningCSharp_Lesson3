@@ -93,6 +93,19 @@ namespace Lesson3
                 }
 
             }
+
+            public double DecimalFraction
+            {
+
+                get
+                {
+
+                    return this.numerator / this.denominator;
+
+                }
+
+            }
+
             #endregion свойства
 
             #region методы
