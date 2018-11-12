@@ -16,9 +16,10 @@ namespace Lesson3
 
     partial class Lesson3
     {
-        #region Исходный код из методички
+        
         struct Complex
         {
+            #region Исходный код из методички
             public double im;
             public double re;
             //  в C# в структурах могут храниться также действия над данными
@@ -43,6 +44,15 @@ namespace Lesson3
             }
             #endregion Исходный код из методички
 
+            #region Реализация метода вычитания комплесных чисел
+            public Complex Minus(Complex x)
+            {
+                Complex y;
+                y.im = im - x.im;
+                y.re = re - x.re;
+                return y;
+            }
+            #endregion Реализация метода вычитания комплесных чисел
 
         }
 
@@ -55,7 +65,17 @@ namespace Lesson3
 
             ClassLibraryLesson3.PrintTaskWelcomeScreen(Welcome);
 
-            string userAnwerAsString = ClassLibraryLesson3.MakeQuestion("ряд чисел разделенные пробелом");
+            Complex complexA = new Complex();
+            complexA.im = 2;
+            complexA.re = 2;
+
+            Complex complexB = new Complex();
+            complexB.im = 5;
+            complexB.re = 7;
+
+            Complex complexB_minus_A = complexB.Minus(complexA);
+
+            ClassLibraryLesson3.Print($"Операция: комп. число: {complexB.ToString()} - комп. число: {complexA.ToString()} = {complexB_minus_A.ToString()}");
 
             ClassLibraryLesson3.Pause();
 
