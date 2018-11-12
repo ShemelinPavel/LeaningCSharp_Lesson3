@@ -21,11 +21,29 @@ namespace Lesson3
         class RationalFraction
         {
 
+            #region поля
             private int numerator;      //числитель
             private int denominator;    //знаменатель
+            #endregion поля
 
-            #region Приведение двух дробей к знаменателю
-            #endregion Приведение двух дробей к знаменателю
+            #region конструктор
+            public RationalFraction(int Num, int Denom)
+            {
+
+                if (Denom == 0)
+                {
+                    ThrowDenomError();
+                }
+                else
+                {
+
+                    this.numerator = Num;
+                    this.denominator = Denom;
+
+                }
+
+            }
+            #endregion конструктор
 
             #region свойства
             public int Numerator
@@ -60,33 +78,106 @@ namespace Lesson3
                 set
                 {
 
-                    this.denominator = value;
+                    if (value == 0)
+                    {
+
+                        ThrowDenomError();
+
+                    }
+                    else
+                    {
+
+                        this.denominator = value;
+                    }
 
                 }
-                
+
             }
             #endregion свойства
 
             #region методы
+            private static void ThrowDenomError()
+            {
+
+                throw new ArgumentException("Знаменатель дроби не может быть равен 0!");
+
+            }
+
+            //приведение к общему знаменателю
             public static void ReductionDenominator(RationalFraction rfA, RationalFraction rfB, out RationalFraction rfC, out RationalFraction rfD)
             {
-                rfC = rfA;
-                rfD = rfB;
 
-                if (!(rfC.denominator == rfD.denominator))
+                if (!(rfA.denominator == rfB.denominator))
                 {
-                    
-                    rfC.numerator = rfC.numerator * rfD.denominator;
-                    rfD.numerator = rfD.numerator * rfC.denominator;
 
+                    rfC = new RationalFraction(rfA.numerator * rfB.denominator, rfA.denominator * rfB.denominator);
+                    rfD = new RationalFraction(rfB.numerator * rfA.denominator, rfA.denominator * rfB.denominator);
+
+                }
+                else
+                {
+
+                    rfC = new RationalFraction(rfA.numerator, rfA.denominator);
+                    rfD = new RationalFraction(rfB.numerator, rfB.denominator);
+                    
                 }
 
             }
 
-            public override string ToString()
+            //НОД по Евклиду
+            private static int GetNOD(int a, int b)
             {
 
-                return ($"{this.numerator} / {this.denominator}");
+                while (a != 0 && b != 0)
+                {
+                    if (a > b)
+                    {
+
+                        a = a % b;
+
+                    }
+                    else
+                    {
+
+                        b = b % a;
+
+                    }
+
+                }
+
+                return a + b;
+
+            }
+
+            //упрощение дроби через НОД
+            public static RationalFraction Simplification(RationalFraction fr)
+            {
+
+                int nod = GetNOD(fr.numerator, fr.denominator);
+
+                return new RationalFraction(fr.numerator / nod, fr.denominator / nod);
+
+            }
+
+            public string ToString(bool simlification = false)
+            {
+
+                RationalFraction value;
+
+                if (simlification)
+                {
+
+                    value = Simplification(this);
+
+                }
+                else
+                {
+
+                    value = this;
+
+                }
+
+                return ($"{value.numerator} / {value.denominator}");
 
             }
 
@@ -97,54 +188,57 @@ namespace Lesson3
 
                 ReductionDenominator(this, b, out reducedFractionA, out reducedFractionB);
 
-                RationalFraction newRationalFraction = new RationalFraction();
-                newRationalFraction.Numerator = reducedFractionA.Numerator + reducedFractionB.Numerator;
-                newRationalFraction.Denominator = reducedFractionA.Denominator;
+                return new RationalFraction(reducedFractionA.numerator + reducedFractionB.numerator, reducedFractionA.denominator);
 
-                return newRationalFraction;
+            }
+
+            public RationalFraction Minus(RationalFraction b)
+            {
+
+                RationalFraction reducedFractionA, reducedFractionB; //дроби приведенные к знаменателю
+
+                ReductionDenominator(this, b, out reducedFractionA, out reducedFractionB);
+
+                return new RationalFraction(reducedFractionA.numerator - reducedFractionB.numerator, reducedFractionA.denominator);
+
+            }
+
+            public RationalFraction Multi(RationalFraction b)
+            {
+
+                return new RationalFraction(this.numerator * b.numerator, this.denominator * b.denominator);
+
+            }
+
+            public RationalFraction Dev(RationalFraction b)
+            {
+
+                return new RationalFraction(this.numerator * b.denominator, this.denominator * b.numerator);
 
             }
             #endregion методы
-            
+
         }
 
         static void Task3()
         {
 
             string Welcome = "Вы выбрали задачу работы с комплексными числами\n";
-            Welcome = Welcome + "Это так увлекательно!\n";
+            Welcome = Welcome + "Это так весело!\n";
             Welcome = Welcome + "Давайте начнем.\n";
-            Welcome = Welcome + "1 - Сложение комплесных чисел\n";
-            Welcome = Welcome + "2 - Вычитание комплесных чисел\n";
-            Welcome = Welcome + "3 - Умножение комплесных чисел\n";
+            Welcome = Welcome + "1 - Сложение дробей\n";
+            Welcome = Welcome + "2 - Вычитание дробей\n";
+            Welcome = Welcome + "3 - Умножение дробей\n";
+            Welcome = Welcome + "4 - Деление дробей\n";
             Welcome = Welcome + "0 - Выход в предыдущее меню\n";
 
             ClassLibraryLesson3.PrintTaskWelcomeScreen(Welcome);
 
-            #region работа структуры 
-            /*
-            StruComplex complexA = new StruComplex();
-            complexA.im = 2;
-            complexA.re = 2;
-
-            StruComplex complexB = new StruComplex();
-            complexB.im = 5;
-            complexB.re = 7;
-
-            ClassLibraryLesson3.Print($"Операция: комп. число: {complexB.ToString()} - комп. число: {complexA.ToString()} = {complexB.Minus(complexA)}");
-            */
-            #endregion работа структуры 
-
             bool menuExit = false;
 
             #region инициализация переменных
-            ClassComplex complexA = new ClassComplex();
-            complexA.im = 2;
-            complexA.re = 3;
-
-            ClassComplex complexB = new ClassComplex();
-            complexB.im = 5;
-            complexB.re = 7;
+            RationalFraction frA = new RationalFraction(6, 3);
+            RationalFraction frB = new RationalFraction(3, 4);
             #endregion инициализация переменных
 
             while (!(menuExit))
@@ -160,20 +254,27 @@ namespace Lesson3
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
 
-                        ClassLibraryLesson3.Print($"Операция: комп. число: {complexA.ToString()} + комп. число: {complexB.ToString()} = {complexA.Plus(complexB)}");
+                        ClassLibraryLesson3.Print($"Операция: дробь: <{frA.ToString()}> + дробь: <{frB.ToString()}> = <{frA.Plus(frB).ToString(true)}>");
                         break;
 
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
 
-                        ClassLibraryLesson3.Print($"Операция: комп. число: {complexA.ToString()} - комп. число: {complexB.ToString()} = {complexA.Minus(complexB)}");
+                        ClassLibraryLesson3.Print($"Операция: дробь: <{frA.ToString()}> - дробь: <{frB.ToString()}> = <{frA.Minus(frB).ToString(true)}>");
                         break;
 
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
 
-                        ClassLibraryLesson3.Print($"Операция: комп. число: {complexA.ToString()} * комп. число: {complexB.ToString()} = {complexA.Multu(complexB)}");
+                        ClassLibraryLesson3.Print($"Операция: дробь: <{frA.ToString()}> * дробь: <{frB.ToString()}> = <{frA.Multi(frB).ToString(true)}>");
                         break;
+
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
+
+                        ClassLibraryLesson3.Print($"Операция: дробь: <{frA.ToString()}> / дробь: <{frB.ToString()}> = <{frA.Dev(frB).ToString(true)}>");
+                        break;
+
 
                     case ConsoleKey.D0:
                     case ConsoleKey.NumPad0:
