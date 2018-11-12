@@ -13,6 +13,14 @@ namespace ClassLibraryLesson3
 
         }
 
+        public static void Pause(string message)
+        {
+
+            Console.WriteLine(message);
+            Console.ReadKey();
+
+        }
+        
         public static void Print(string Text, bool EndOfString = true)
         {
 
