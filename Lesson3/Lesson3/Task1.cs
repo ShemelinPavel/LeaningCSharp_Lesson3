@@ -194,7 +194,7 @@ namespace Lesson3
 
                 }
 
-                if (!(menuExit)) ClassLibraryLesson3.Pause("Нажмите люубую клавишу.");
+                if (!(menuExit)) ClassLibraryLesson3.Pause("Нажмите любую клавишу.");
 
             }
 
