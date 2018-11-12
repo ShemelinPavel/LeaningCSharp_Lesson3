@@ -149,7 +149,7 @@ namespace Lesson3
 
             bool menuExit = false;
 
-            //инициализация переменных
+            #region инициализация переменных
             ClassComplex complexA = new ClassComplex();
             complexA.im = 2;
             complexA.re = 3;
@@ -157,6 +157,7 @@ namespace Lesson3
             ClassComplex complexB = new ClassComplex();
             complexB.im = 5;
             complexB.re = 7;
+            #endregion инициализация переменных
 
             while (!(menuExit))
             {
