@@ -14,7 +14,7 @@
             Welcome = Welcome + "Меню на сегодня:\n";
             Welcome = Welcome + "1 - Работа с комплексными числами\n";
             Welcome = Welcome + "2 - Подсчет числа знаков в числе\n";
-            Welcome = Welcome + "3 - Сумма положительных нечетных чисел в ряду\n";
+            Welcome = Welcome + "3 - Работа с дробями\n";
 
             Welcome = Welcome + "0 - Выход из программы\n";
 
