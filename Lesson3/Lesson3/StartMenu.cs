@@ -35,12 +35,13 @@
 
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
-                        //Task2();
+                        ClassLibraryLesson3.Print("Делал в ДЗ №2");
+                        ClassLibraryLesson3.Pause("Нажмите любую клавишу.");
                         break;
 
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
-                        //Task3();
+                        Task3();
                         break;
 
                     case ConsoleKey.D0:
